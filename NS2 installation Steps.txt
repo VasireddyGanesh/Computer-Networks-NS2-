@@ -1,0 +1,68 @@
+Step 1: Install the basic libraries like
+    
+$] sudo apt install build-essential autoconf automake libxmu-dev
+
+Step 2: install gcc-4.8 and g++-4.8
+
+open the file using sudo mode
+$] sudo nano /etc/apt/sources.list
+
+Include the following line
+deb http://in.archive.ubuntu.com/ubuntu bionic main universe
+
+$] sudo apt update
+$] sudo apt install gcc-4.8 g++-4.8
+
+Step 3: 
+Unzip the ns2 packages to home folder
+
+$] tar zxvf ns-allinone-2.35.tar.gz
+$] cd ns-allinone-2.35/ns-2.35
+
+Modify the following make files.
+
+~ns-2.35/Makefile.in
+
+Change @CC@ to gcc-4.8
+change @CXX@ to g++-4.8
+
+~nam-1.15/Makefile.in
+~xgraph-12.2/Makefile.in
+~otcl-1.14/Makefile.in
+
+Change in all places 
+@CC@ to gcc-4.8
+@CPP@ or @CXX@ to g++-4.8
+
+open the file:
+~ns-2.35/linkstate/ls.h
+
+Change at the Line no 137 
+void eraseAll() { erase(baseMap::begin(), baseMap::end()); }
+
+to This
+void eraseAll() { this->erase(baseMap::begin(), baseMap::end()); }
+
+All changes made
+
+Step 4: Open a new terminal
+
+$] cd ns-allinone-2.35/
+
+$] ./install
+
+Step 5 - Set the PATH
+Open a new Terminal, 
+
+$] gedit .bashrc 
+
+Paste the following lines
+
+export PATH=$PATH:/home/<yourusername>/ns-allinone-2.35/bin:/home/<yourusername>/ns-allinone-2.35/tcl8.5.10/unix:/home/<yourusername>/ns-allinone-2.35/tk8.5.10/unix
+
+export LD_LIBRARY_PATH=/home/<yourusername>/ns-allinone-2.35/otcl-1.14:/home/<yourusername>/ns-allinone-2.35/lib
+
+
+Logout and Login back
+OR
+$] source .bashrc
